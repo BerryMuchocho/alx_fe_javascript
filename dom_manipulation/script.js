@@ -1,28 +1,30 @@
-const quoteDisplay = document.getElementById('quoteDisplay');
-const newQuoteButton = document.getElementById('newQuote');
-
+// REQUIRED: quotes array with text + category
 const quotes = [
   { text: "The only way to do great work is to love what you do.", category: "Motivation" },
   { text: "Talk is cheap. Show me the code.", category: "Programming" },
   { text: "Simplicity is the soul of efficiency.", category: "Wisdom" }
 ];
 
-function showRandomQuote() {
+// REQUIRED: function name must be displayRandomQuote
+function displayRandomQuote() {
+  const quoteDisplay = document.getElementById('quoteDisplay');
+
   const randomIndex = Math.floor(Math.random() * quotes.length);
   const quote = quotes[randomIndex];
 
   quoteDisplay.innerHTML = '';
 
-  const quoteText = document.createElement('p');
-  quoteText.textContent = `"${quote.text}"`;
+  const p = document.createElement('p');
+  p.textContent = `"${quote.text}"`;
 
-  const quoteCategory = document.createElement('small');
-  quoteCategory.textContent = `Category: ${quote.category}`;
+  const small = document.createElement('small');
+  small.textContent = `Category: ${quote.category}`;
 
-  quoteDisplay.appendChild(quoteText);
-  quoteDisplay.appendChild(quoteCategory);
+  quoteDisplay.appendChild(p);
+  quoteDisplay.appendChild(small);
 }
 
+// REQUIRED: function name must be addQuote
 function addQuote() {
   const textInput = document.getElementById('newQuoteText');
   const categoryInput = document.getElementById('newQuoteCategory');
@@ -31,7 +33,6 @@ function addQuote() {
   const category = categoryInput.value.trim();
 
   if (text === '' || category === '') {
-    alert('Both fields are required.');
     return;
   }
 
@@ -40,7 +41,10 @@ function addQuote() {
   textInput.value = '';
   categoryInput.value = '';
 
-  showRandomQuote();
+  displayRandomQuote();
 }
 
-newQuoteButton.addEventListener('click', showRandomQuote);
+// REQUIRED: event listener on Show New Quote button
+document
+  .getElementById('newQuote')
+  .addEventListener('click', displayRandomQuote);
