@@ -35,7 +35,6 @@ function displayRandomQuote() {
     <small>Category: ${quote.category}</small>
   `;
 
-  // session storage: last viewed quote
   sessionStorage.setItem("lastQuote", JSON.stringify(quote));
 }
 
@@ -54,8 +53,12 @@ function addQuote() {
     return;
   }
 
-  quotes.push({ text, category });
+  const newQuote = { text, category };
+  quotes.push(newQuote);
   saveQuotes();
+
+  // POST new quote to server (mock)
+  postQuoteToServer(newQuote);
 
   textInput.value = "";
   categoryInput.value = "";
@@ -178,12 +181,12 @@ function importFromJsonFile(event) {
 // ----------------------
 const SERVER_URL = "https://jsonplaceholder.typicode.com/posts";
 
-async function fetchQuotesFromServer() {   // <- renamed for checker
+// GET quotes from server
+async function fetchQuotesFromServer() {
   try {
     const response = await fetch(SERVER_URL);
     const data = await response.json();
 
-    // Map posts to quotes
     const serverQuotes = data.slice(0, 5).map(post => ({
       text: post.title,
       category: "Server"
@@ -195,6 +198,22 @@ async function fetchQuotesFromServer() {   // <- renamed for checker
   }
 }
 
+// POST new quote to server
+async function postQuoteToServer(quote) {
+  try {
+    await fetch(SERVER_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(quote)
+    });
+  } catch (error) {
+    console.error("Failed to post quote to server:", error);
+  }
+}
+
+// Conflict resolution: server wins
 function syncWithServer(serverQuotes) {
   const localQuotes = JSON.parse(localStorage.getItem("quotes")) || [];
 
