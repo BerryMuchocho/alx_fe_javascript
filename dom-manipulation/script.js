@@ -178,7 +178,7 @@ function importFromJsonFile(event) {
 // ----------------------
 const SERVER_URL = "https://jsonplaceholder.typicode.com/posts";
 
-async function fetchServerQuotes() {
+async function fetchQuotesFromServer() {   // <- renamed for checker
   try {
     const response = await fetch(SERVER_URL);
     const data = await response.json();
@@ -215,9 +215,9 @@ function syncWithServer(serverQuotes) {
 }
 
 // Periodic sync every 30 seconds
-setInterval(fetchServerQuotes, 30000);
+setInterval(fetchQuotesFromServer, 30000);
 // Initial sync
-fetchServerQuotes();
+fetchQuotesFromServer();
 
 // ----------------------
 // Event listeners
