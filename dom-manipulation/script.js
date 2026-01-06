@@ -1,4 +1,4 @@
-// Quotes data (REQUIRED: array named "quotes" with text + category)
+// REQUIRED: quotes array
 const quotes = [
   { text: "The only way to do great work is to love what you do.", category: "Motivation" },
   { text: "Talk is cheap. Show me the code.", category: "Programming" },
@@ -9,8 +9,8 @@ const quotes = [
 const quoteDisplay = document.getElementById('quoteDisplay');
 const newQuoteButton = document.getElementById('newQuote');
 
-// REQUIRED: displayRandomQuote function
-function displayRandomQuote() {
+// REQUIRED: function name must be showRandomQuote
+function showRandomQuote() {
   const randomIndex = Math.floor(Math.random() * quotes.length);
   const quote = quotes[randomIndex];
 
@@ -43,7 +43,7 @@ function addQuote() {
   textInput.value = '';
   categoryInput.value = '';
 
-  displayRandomQuote();
+  showRandomQuote();
 }
 
 // REQUIRED: createAddQuoteForm function
@@ -71,8 +71,8 @@ function createAddQuoteForm() {
   document.body.appendChild(container);
 }
 
-// REQUIRED: event listener on "Show New Quote" button
-newQuoteButton.addEventListener('click', displayRandomQuote);
+// REQUIRED: event listener on Show New Quote button
+newQuoteButton.addEventListener('click', showRandomQuote);
 
 // Initialize dynamic form
 createAddQuoteForm();
